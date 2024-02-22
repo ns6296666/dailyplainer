@@ -1,4 +1,5 @@
 const date = dayjs(new Date());
+const time = date.format("h:mm A");
 const day = date.format("dddd, MMMM D");
 
 // logic for creating business hour
@@ -28,14 +29,14 @@ let liElement = result.forEach((hour, i) => {
   inputText.type = "text";
   inputText.value = localStorage.getItem(key);
 
-  console.log(inputText);
-
   // file icon
   const iconElement = document.createElement("i");
   iconElement.classList = "fa-solid fa-file";
   iconElement.style.color = "white";
   iconElement.style.fontSize = "18px";
-
+  inputText.style.backgroundColor =
+    time < hour.time ? "#D3D3D2" : time > hour.time ? "#75DC77" : "#FE685F";
+  console.log("============", time, hour.time, time < hour.time);
   divElement.innerHTML = `
  
   <p class="hour">${hour.time}</p>
@@ -60,14 +61,12 @@ let liElement = result.forEach((hour, i) => {
 
     const newDiv = document.getElementById("data");
     const saved = document.getElementById("saved-data");
-    console.log("checkIcon", checkIcon);
     saved.textContent = `data saved to localstorage `;
 
     return newDiv.append(checkIcon);
   }
 
   const savedBtns = document.querySelectorAll("icons");
-  console.log("savedBtn", savedBtns);
   savedBtns.forEach((savedBtn) =>
     savedBtn.addEventListener("onclick", inputHandler)
   );
