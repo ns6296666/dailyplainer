@@ -17,12 +17,13 @@ currentDayElement.textContent = day;
 // business hour element
 const parentElement = document.getElementById("container");
 
-let liElement = result.forEach((hour) => {
+let liElement = result.forEach((hour, i) => {
   const divElement = document.createElement("div");
   divElement.classList.add("custom-row");
 
   // input element
   const inputText = document.createElement("input");
+  inputText.classList = `event-plan${i}`;
   inputText.type = "text";
 
   console.log(inputText);
@@ -30,9 +31,8 @@ let liElement = result.forEach((hour) => {
   // file icon
   const iconElement = document.createElement("i");
   iconElement.classList = "fa-solid fa-file";
-  iconElement.style.color = "blue";
-  iconElement.style.fontSize = "24px";
-  console.log("iconElement", iconElement);
+  iconElement.style.color = "white";
+  iconElement.style.fontSize = "18px";
 
   divElement.innerHTML = `
  
@@ -45,5 +45,27 @@ let liElement = result.forEach((hour) => {
   divElement.querySelector(".detail").appendChild(inputText);
   divElement.querySelector(".icons").appendChild(iconElement);
   parentElement.append(divElement);
+
+  inputText.addEventListener("change", inputHandler);
+  function inputHandler() {
+    localStorage.setItem("savedData", inputText.value);
+    // check icon
+    const checkIcon = document.createElement("i");
+    checkIcon.classList = "fa-solid fa-check";
+    checkIcon.style.color = "white";
+    checkIcon.style.fontSize = "18px";
+
+    const newDiv = document.getElementById("data");
+    const saved = document.getElementById("saved-data");
+    console.log("checkIcon", checkIcon);
+    saved.textContent = `data saved to localstorage `;
+
+    return newDiv;
+  }
+
+  const savedBtns = document.querySelectorAll("icons");
+  console.log("savedBtn", savedBtns);
+  savedBtns.forEach((savedBtn) =>
+    savedBtn.addEventListener("onclick", inputHandler)
+  );
 });
-console.log("ampm", parentElement);
