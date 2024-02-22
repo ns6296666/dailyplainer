@@ -22,9 +22,11 @@ let liElement = result.forEach((hour, i) => {
   divElement.classList.add("custom-row");
 
   // input element
+  const key = `savedData${i}`;
   const inputText = document.createElement("input");
   inputText.classList = `event-plan${i}`;
   inputText.type = "text";
+  inputText.value = localStorage.getItem(key);
 
   console.log(inputText);
 
@@ -48,7 +50,8 @@ let liElement = result.forEach((hour, i) => {
 
   inputText.addEventListener("change", inputHandler);
   function inputHandler() {
-    localStorage.setItem("savedData", inputText.value);
+    localStorage.setItem(key, inputText.value);
+    inputText.value = localStorage.getItem(key);
     // check icon
     const checkIcon = document.createElement("i");
     checkIcon.classList = "fa-solid fa-check";
@@ -60,7 +63,7 @@ let liElement = result.forEach((hour, i) => {
     console.log("checkIcon", checkIcon);
     saved.textContent = `data saved to localstorage `;
 
-    return newDiv;
+    return newDiv.append(checkIcon);
   }
 
   const savedBtns = document.querySelectorAll("icons");
